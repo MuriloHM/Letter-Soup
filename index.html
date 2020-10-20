@@ -1,7 +1,7 @@
 <!doctype html>
 
 <html>
-	<script type="text/javascript" src="sources/loud.json"></script>
+	<script type="text/javascript" src="loud.json" "Words.json"></script>
 	<head>
 		<meta charset="UTF-8">
 		
@@ -9,13 +9,15 @@
 			Letter Soup - 
 		</title>
 	</head>
-	<body onload="initialize();" onresize="resize_canvas();">
+	 <body onload="initialize();" > <!--onresize="resize_canvas(); Comentei essa parte-->
 		<canvas id="myCanvas" width="800" height="450" style="border:1px solid #000000;">
 			Seu browser não suporta canvas/HTML5.
 		</canvas>
 	</body>
 </html>
-<script>
+
+		
+	<script>
 	var canvas = document.getElementById("myCanvas");	    	
 	var drawer = canvas.getContext("2d");
 	var rect;
@@ -51,7 +53,7 @@
 	
 	var timerImage;
 	timerImage = new Image();
-	timerImage.src = "sources/images/timer.png";
+	timerImage.src = "./images/timer.png";//mudado diretório,então de source/image/ passa para ./images
 	var timeAngle = 2*Math.PI;
 	var timerCircle = 3*Math.PI;	
 	
@@ -61,17 +63,18 @@
 	var chanceGastaImg = new Image();
 	//chanceImg.src = 'sources/images/Chance01.png';
 	//chanceGastaImg.src = 'sources/images/Chance00.png';
-	chanceImg.src = 'sources/images/baby1.png';
-	chanceGastaImg.src = 'sources/images/baby21.png';
+	
+	chanceImg.src = './images/baby1.png'; //mudado diretório,então de source/image/ passa para ./images
+	chanceGastaImg.src = './images/baby21.png'; //mudado diretório,então de source/image/ passa para ./images
 	var tips = ["Do you _ _ _ _ the post?", "We _ _ _ _ _ in the morning.", "It doesn't _ _ _ well."];
 	var imgTips = [];
 	var soundTips = [];
 	imgTips[0] = new Image();
-	imgTips[0].src = "sources/images/img_tip/ImgTip_Like.png";
+	imgTips[0].src = "./images/img_tip/ImgTip_Like.png"; //mudado diretório,então de source/image/ passa para ./images
 	imgTips[1] = new Image();
 	imgTips[1].src = "";
 	imgTips[2] = new Image();
-	imgTips[2].src = "sources/images/img_tip/ImgTip_Fit.png";
+	imgTips[2].src = "./images/img_tip/ImgTip_Fit.png";//mudado diretório,então de source/image/ passa para ./images
 	soundTips[0] = new Audio('sources/sounds/sound_tip/SoundTip_Carry.mp3');
 	
 	var gameStatus;
@@ -91,9 +94,9 @@
 
 	var backgroundTablecloth;
 	backgroundTablecloth = new Image();
-	backgroundTablecloth.src = "sources/images/screens/backgroundTablecloth00.jpg";
+	backgroundTablecloth.src = "./images/screens/backgroundTablecloth00.jpg";//mudado diretório,então de source/image/ passa para ./images
 
-	function resize_canvas(){
+	//function resize_canvas(){
 		// if (canvas.width  < window.innerWidth) {
         //     canvas.width  = window.innerWidth - window.innerWidth/20;
         //     }
@@ -110,7 +113,8 @@
 
 		// canvas.style.width = width + 'px';
 		// canvas.style.height = height + 'px';
-	}	
+	//}	
+		
 	
 	function loud(){
 		var temp = JSON.parse(data);
@@ -120,7 +124,8 @@
 		}
 	}
 	
-	document.getElementById("myCanvas").onmousemove = function (mouse) {
+	window.addEventListener('mousemove',function (mouse) {
+		document.getElementById("myCanvas").onmousemove;  
 		borda = canvas.getBoundingClientRect();
 		mouseStates.x = mouse.clientX-borda.left;
 		mouseStates.y = mouse.clientY-borda.top;
@@ -129,8 +134,9 @@
 		letra.centro.x = mouseStates.x;
 		letra.centro.y = mouseStates.y;
 		});
-	};
-	document.getElementById("myCanvas").onmousedown = function (mouse) {
+	});
+	window.addEventListener('mousedown',function (mouse) {
+		document.getElementById("myCanvas").onmousedown;
 		borda = canvas.getBoundingClientRect();
 		mouseStates.clicked = true;
 		mouse = new Circle(mouse.clientX-borda.left, mouse.clientY-borda.top, 0, 0);
@@ -143,9 +149,10 @@
 				letra.centro.y = mouseStates.y;
 			}
 		});
-	};
+	});
 	
-	document.getElementById("myCanvas").onmouseup = function () {
+	window.addEventListener('mouseup',function (mouse){
+		document.getElementById("myCanvas").onmouseup;
 		mouseStates.clicked = false;
 		letraNoCentro();
 		centralizaLetra();
@@ -153,7 +160,7 @@
 		
 		indice = null;
 		hold = [];
-	};
+	});
 	
 	function Rectangle(x, y, width, height, color){
 		this.x = x;
@@ -200,8 +207,9 @@
 			x: this.x,
 			y: this.y
 		};
-		if(!(text==" " || text==""))
-			this.image.src = "sources/images/letters/"+this.text.toLowerCase() + ".png";
+		if(!(text==" " || text=="")){
+			this.image.src = "./images/letters/"+this.text.toLowerCase() + ".png"; //mudado diretório,então de source/image/ passa para ./images
+			}
 		this.claro = false;
 		
 		this.draw = function (){
@@ -381,7 +389,7 @@
 		for(i=0;i<3;i++){
 			respostas[i] = globalWordTips[selectedeTips[i]].word;
 			tips[i] = globalWordTips[selectedeTips[i]].text;
-			imgTips[i].src = "sources/images/img_tip/"+globalWordTips[selectedeTips[i]].urlImage;
+			imgTips[i].src = "./images/img_tip/"+globalWordTips[selectedeTips[i]].urlImage; //mudado diretório,então de source/image/ passa para ./images
 			soundTips[i] = new Audio('sources/sounds/sound_tip/' + globalWordTips[selectedeTips[i]].urlSound); //insere o audio de acordo com a palavra
 		}
 	}
@@ -482,6 +490,7 @@
 		soundTipsPlay();
 		soundTimer.play();
 		soundMusic.play();			
+	
 
 		if(highscore !== null){
 			if (score > highscore) {
@@ -621,17 +630,19 @@
 	function loop(){
 		useScreen.update();
 		useScreen.draw();
+		
 	}
 	
 	function initialize(){
-
-		resize_canvas();
+		
+		//resize_canvas();
 		loud();
 		
 		planoDeFundo = new Rectangle(0,0,canvas.width,canvas.height, "#ffffff");
 		
 		imgPlate = new Image();
-		imgPlate.src = "sources/images/prato1.png";
+		imgPlate.src = "./images/prato1.png";//mudado diretório,então de source/image/ passa para ./images
+		
 		//imgPlate.src = "sources/images/plate.png";
 		
 		// circulos = [
@@ -639,6 +650,7 @@
 		// 	new Circle(400, 225, 180, "rgba(255,133,51,0.88"), 
 		// 	new Circle(400, 225, 90, "rgba(230,92,0,0.2")  
 		// ];
+		
 
 		circulos = [
 			new Circle(400, 225, 200, "rgba(43,65,70,0.0)"), 
@@ -686,16 +698,16 @@
 	
 	function loudButtons(){
 		imgBtnCredits = new Image();
-		imgBtnCredits.src = "sources/images/buttons/buttonCredits.png";
+		imgBtnCredits.src = "./images/buttons/buttonCredits.png";//mudado diretório,então de source/image/ passa para ./images
 	
 		imgBtnReturn = new Image();
-		imgBtnReturn.src = "sources/images/buttons/buttonReturn.png";
+		imgBtnReturn.src = "./images/buttons/buttonReturn.png";//mudado diretório,então de source/image/ passa para ./images
 	
 		imgBtnScore = new Image();
-		imgBtnScore.src = "sources/images/buttons/buttonScore.png";
+		imgBtnScore.src = "./images/buttons/buttonScore.png";//mudado diretório,então de source/image/ passa para ./images
 	
 		imgBtnStart = new Image();
-		imgBtnStart.src = "sources/images/buttons/buttonStart.png";
+		imgBtnStart.src = "./images/buttons/buttonStart.png";//mudado diretório,então de source/image/ passa para ./images
 		
 		btnStart = new Button(imgBtnStart, new Rectangle(600,50, 135, 71, "#FFFFFF"), null);
 		btnCredits = new Button(imgBtnCredits, new Rectangle(600,150, 167, 65, "#FFFFFF"), null)
@@ -715,13 +727,13 @@
 	
 	function loudBackgrounds(){
 		imgBcgMainMenu = new Image();
-		imgBcgMainMenu.src = "sources/images/screens/screenMenu.png";
+		imgBcgMainMenu.src = "./images/screens/screenMenu.png";//mudado diretório,então de source/image/ passa para ./images
 		
 		imgBcgScore = new Image();
-		imgBcgScore.src = "sources/images/screens/screenScore.png";
+		imgBcgScore.src = "./images/screens/screenScore.png";//mudado diretório,então de source/image/ passa para ./images
 		
 		imgBcgCredtis = new Image();
-		imgBcgCredtis.src = "sources/images/screens/screenCredits.png";
+		imgBcgCredtis.src = "./images/screens/screenCredits.png";//mudado diretório,então de source/image/ passa para ./images
 		
 		bcgMainMenu = new Background(imgBcgMainMenu);
 		bcgScore = new Background(imgBcgScore);
